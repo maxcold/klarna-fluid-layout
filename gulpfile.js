@@ -4,6 +4,7 @@ var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var livereload = require('gulp-livereload');
 var minifyCss = require('gulp-minify-css');
+var autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('minify', function() {
     gulp.src('app/js/*.js')
@@ -16,9 +17,22 @@ gulp.task('minify', function() {
 });
 
 gulp.task('minify-css', function() {
-    gulp.src('app/css/*.css')
+    gulp.src('app/css/main.css')
         .pipe(minifyCss())
+        .pipe(autoprefixer())
         .pipe(concat('result.css'))
+        .pipe(gulp.dest('app/build'))
+        .pipe(livereload());
+
+    gulp.src('app/css/main.ie8.css')
+        .pipe(minifyCss())
+        .pipe(concat('result.ie8.css'))
+        .pipe(gulp.dest('app/build'))
+        .pipe(livereload());
+
+    gulp.src('app/css/main.ie9.css')
+        .pipe(minifyCss())
+        .pipe(concat('result.ie9.css'))
         .pipe(gulp.dest('app/build'))
         .pipe(livereload());
 });

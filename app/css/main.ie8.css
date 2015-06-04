@@ -1,0 +1,13 @@
+.container2 {
+    text-align: justify;
+
+}
+
+.box {
+    display: inline-block;
+    vertical-align: top;
+}
+
+    .box__delete {
+        background-image: url(../images/box__delete.png);
+    }
