@@ -1,2 +1,3 @@
 app/build/result.*
 node_modules/
+bower_components/

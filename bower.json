@@ -1,0 +1,12 @@
+{
+  "name": "klarna",
+  "version": "1.0.0",
+  "authors": [
+    "Maksim Kholod <mxcold@gmail.com>"
+  ],
+  "description": "Klarna javascript assignment",
+  "dependencies": {
+    "jquery": "=1.11.3",
+    "handlebars": "=3.0.3"
+  }
+}
