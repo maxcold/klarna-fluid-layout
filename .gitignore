@@ -1,3 +1,4 @@
-app/build/result.*
+app/build
+!app/build/.gitplaceholder
 node_modules/
 bower_components/

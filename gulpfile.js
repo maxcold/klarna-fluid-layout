@@ -7,7 +7,7 @@ var minifyCss = require('gulp-minify-css');
 var autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('minify', function() {
-    gulp.src('app/js/*.js')
+    gulp.src(['app/js/*.js', 'app/external/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
         .pipe(uglify())
