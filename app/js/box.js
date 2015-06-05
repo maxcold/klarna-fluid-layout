@@ -17,6 +17,8 @@ $(function() {
             this.allSizeCls = this.sizes.reduce(function(result, num) {
                 return result + self.sizeCls + num + ' ';
             }, '');
+            this.leftNeighborContainer = this.$box.find('.box__left-neighbour');
+            this.rightNeighborContainer = this.$box.find('.box__right-neighbour');
         }
 
         Box.prototype.setSize = function(size) {
@@ -26,7 +28,23 @@ $(function() {
             $box.addClass(this.sizeCls + size);
         };
 
-        return Box
+        Box.prototype.setLeftNeighbor = function(id) {
+            id = id || '';
+
+            var $box = this.$box;
+
+            this.leftNeighborContainer.text(id);
+        };
+
+        Box.prototype.setRightNeighbor = function(id) {
+            id = id || '';
+
+            var $box = this.$box;
+
+            this.rightNeighborContainer.text(id);
+        };
+
+        return Box;
     })(jQuery);
 });
 

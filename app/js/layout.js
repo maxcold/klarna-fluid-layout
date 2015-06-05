@@ -27,8 +27,8 @@ $(function() {
                 initialState.forEach(function(id, index) {
                     var prev = index - 1;
 
-                    self.addBox(prev, id)
-                })
+                    self.addBox(prev, id);
+                });
             },
             onHover: function(method) {
 
@@ -41,7 +41,7 @@ $(function() {
 
                         $el[method + 'Class']('hover');
                     });
-                }
+                };
             },
             onClick: function() {
                 var self = this;
@@ -50,9 +50,12 @@ $(function() {
                     var $box = $(this);
                     var id = $box.data('id');
                     var index = state.indexOf(id);
+                    var newBgColor = KLARNA.utils.darkerColor($container2.css('background-color'), 0.01);
 
-                    self.addBox(index)
-                }
+                    $container2.css('background-color', newBgColor);
+
+                    self.addBox(index);
+                };
             },
             addBox: function(prev, id) {
                 id = id || currentId;
@@ -74,7 +77,7 @@ $(function() {
                 }
 
                 if (id >= currentId) {
-                    currentId++
+                    currentId++;
                 }
 
                 this.recalc();
@@ -84,6 +87,11 @@ $(function() {
                 state.forEach(function(id, index) {
                     var box = boxesById[id];
                     var mod = (index + 1) % sizeRepeat;
+                    var leftNeighbor = state[index-1];
+                    var rightNeighbor = state[index+1];
+
+                    box.setLeftNeighbor(leftNeighbor);
+                    box.setRightNeighbor(rightNeighbor);
 
                     switch (mod) {
                         case 1:
@@ -97,6 +105,25 @@ $(function() {
                             break;
                         case 0:
                             box.setSize(box.sizes[2]);
+                            break;
+                    }
+
+                    switch (mod) {
+                        case 1:
+                            box.setLeftNeighbor();
+                            break;
+                        case 3:
+                            box.setRightNeighbor();
+                            break;
+                        case 4:
+                            box.setLeftNeighbor();
+                            break;
+                        case 5:
+                            box.setRightNeighbor();
+                            break;
+                        case 0:
+                            box.setLeftNeighbor();
+                            box.setRightNeighbor();
                             break;
                     }
                 });
