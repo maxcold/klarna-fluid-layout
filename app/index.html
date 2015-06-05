@@ -11,27 +11,24 @@
 <body>
 
 <div class="container1">
-    <div class="container2">
-        <div class="box box_size_1">
-            <div class="box__delete"></div>
-            <div class="box__header">
-                #1
-            </div>
-            <div class="box__content">
-                <div class="box__left-neighbour">0</div>
-                <div class="box__right-neighbour">2</div>
-            </div>
-        </div>
-        <div class="box box_size_1"></div>
-        <div class="box box_size_1"></div>
-        <div class="box box_size_2"></div>
-        <div class="box box_size_2"></div>
-        <div class="box box_size_3"></div>
-        <div class="box box_size_1"></div>
-    </div>
+    <div class="container2"></div>
 </div>
 
+<script id="boxTmpl" type="text/x-handlebars-template">
+    <div class="box">
+        <div class="box__delete"></div>
+        <div class="box__header">
+            #{{id}}
+        </div>
+        <div class="box__content">
+            <div class="box__left-neighbour"></div>
+            <div class="box__right-neighbour"></div>
+        </div>
+    </div>
+</script>
+
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/handlebars/handlebars.min.js"></script>
 <script src="build/result.js"></script>
 </body>
 </html>
