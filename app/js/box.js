@@ -2,6 +2,7 @@ var KLARNA = KLARNA || {};
 
 $(function() {
     KLARNA.Box = (function($) {
+        var $document = $(document);
         var boxTmpl = Handlebars.compile($('#boxTmpl').html());
 
         function Box(id) {
@@ -19,7 +20,16 @@ $(function() {
             }, '');
             this.leftNeighborContainer = this.$box.find('.box__left-neighbour');
             this.rightNeighborContainer = this.$box.find('.box__right-neighbour');
+            this.$box.on('click', '.box__delete', $.proxy(this.onDelete, this));
         }
+
+        Box.prototype.onDelete = function(e) {
+            e.stopPropagation();
+
+            var id = this.$box.data('id');
+
+            $document.trigger('box.delete', {id: id});
+        };
 
         Box.prototype.setSize = function(size) {
             var $box = this.$box;

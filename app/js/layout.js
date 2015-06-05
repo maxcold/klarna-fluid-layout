@@ -18,11 +18,13 @@ $(function() {
 
                 currentId = initialState.sort()[initialState.length -1];
 
-                $document.on('mouseenter', '.box', self.onHover('add'));
+                $document.on('mouseenter', '.box', self.onBoxHover('add'));
 
-                $document.on('mouseleave', '.box', self.onHover('remove'));
+                $document.on('mouseleave', '.box', self.onBoxHover('remove'));
 
-                $document.on('click', '.box', self.onClick());
+                $document.on('click', '.box', self.onBoxClick());
+
+                $document.on('box.delete', self.onBoxDelete());
 
                 initialState.forEach(function(id, index) {
                     var prev = index - 1;
@@ -30,7 +32,8 @@ $(function() {
                     self.addBox(prev, id);
                 });
             },
-            onHover: function(method) {
+            onBoxHover: function(method) {
+                var self = this;
 
                 return function() {
                     var $box = $(this);
@@ -43,7 +46,7 @@ $(function() {
                     });
                 };
             },
-            onClick: function() {
+            onBoxClick: function() {
                 var self = this;
 
                 return function() {
@@ -55,6 +58,30 @@ $(function() {
                     $container2.css('background-color', newBgColor);
 
                     self.addBox(index);
+                };
+            },
+            onBoxDelete: function() {
+                var self = this;
+
+                return function(e, data) {
+                    var id = data.id;
+                    var box = boxesById[id];
+                    var index = state.indexOf(id);
+                    var newBgColor = KLARNA.utils.lighterColor($container2.css('background-color'), 0.01);
+
+                    if (confirm('Hi! Do you realy want to delete box #' + id)) {
+                        $container2.css('background-color', newBgColor);
+
+                        box.$box.remove();
+
+                        if (index !== -1) {
+                            state.splice(index, 1);
+                        }
+
+                        delete boxesById[id];
+
+                        self.recalc();
+                    }
                 };
             },
             addBox: function(prev, id) {
