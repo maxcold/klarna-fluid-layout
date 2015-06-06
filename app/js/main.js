@@ -94,9 +94,5 @@ $(function() {
             }
         };
     })(jQuery);
-
-    // start point
-    KLARNA.app.init();
-
 });
 
