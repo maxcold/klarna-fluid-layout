@@ -25,7 +25,7 @@ $(function() {
             this.sizeCls = 'box_size_'; // size class template
             this.allSizeCls = this.sizes.reduce(function(result, num) {
                 return result + self.sizeCls + num + ' ';
-            }, ''); // string with all size classes to convinience delete
+            }, ''); // string with all size classes to convenience delete
             this.leftNeighborContainer = this.$box.find('.box__left-neighbour'); // left neighbor id container
             this.rightNeighborContainer = this.$box.find('.box__right-neighbour'); // right neighbor id container
 
