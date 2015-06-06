@@ -6,7 +6,7 @@ $(function() {
         var sizeRepeat = 6;
         var $container1 = $('.container1');
         var $container2 = $('.container2');
-        var state = [];
+        var initialBgColor = $container2.css('background-color');
         var boxesById = {};
         var currentId;
 
@@ -16,7 +16,11 @@ $(function() {
 
                 var self = this;
 
-                currentId = initialState.sort()[initialState.length -1];
+                self.state = [];
+                self.deleted = 0;
+
+                // slice for not mutating array
+                currentId = initialState.slice().sort(function(a, b){return a-b;})[initialState.length -1];
 
                 $document.on('mouseenter', '.box', self.onBoxHover('add'));
 
@@ -52,12 +56,11 @@ $(function() {
                 return function() {
                     var $box = $(this);
                     var id = $box.data('id');
-                    var index = state.indexOf(id);
-                    var newBgColor = KLARNA.utils.darkerColor($container2.css('background-color'), 0.01);
-
-                    $container2.css('background-color', newBgColor);
+                    var index = self.state.indexOf(id);
 
                     self.addBox(index);
+
+                    $document.trigger('box.add');
                 };
             },
             onBoxDelete: function() {
@@ -66,8 +69,12 @@ $(function() {
                 return function(e, data) {
                     var id = data.id;
                     var box = boxesById[id];
-                    var index = state.indexOf(id);
+                    var index = self.state.indexOf(id);
                     var newBgColor = KLARNA.utils.lighterColor($container2.css('background-color'), 0.01);
+
+                    if (self.state.length === 1) {
+                        return alert('Sorry, it is impossible to delete the last box');
+                    }
 
                     if (confirm('Hi! Do you realy want to delete box #' + id)) {
                         $container2.css('background-color', newBgColor);
@@ -75,22 +82,28 @@ $(function() {
                         box.$box.remove();
 
                         if (index !== -1) {
-                            state.splice(index, 1);
+                            self.state.splice(index, 1);
                         }
 
                         delete boxesById[id];
 
                         self.recalc();
+
+                        self.deleted++;
                     }
                 };
             },
             addBox: function(prev, id) {
                 id = id || currentId;
 
+                var state = this.state;
                 var box = new KLARNA.Box(id);
                 var $box = box.$box;
                 var prevId;
                 var prevBox;
+                var newBgColor = KLARNA.utils.darkerColor($container2.css('background-color'), 0.01);
+
+                $container2.css('background-color', newBgColor);
 
                 state.splice(prev + 1, 0, id);
                 boxesById[id] = box;
@@ -111,11 +124,13 @@ $(function() {
             },
             //todo: добавить с какого элемента пересчитывать
             recalc: function() {
-                state.forEach(function(id, index) {
+                var self = this;
+
+                self.state.forEach(function(id, index) {
                     var box = boxesById[id];
                     var mod = (index + 1) % sizeRepeat;
-                    var leftNeighbor = state[index-1];
-                    var rightNeighbor = state[index+1];
+                    var leftNeighbor = self.state[index-1];
+                    var rightNeighbor = self.state[index+1];
 
                     box.setLeftNeighbor(leftNeighbor);
                     box.setRightNeighbor(rightNeighbor);
@@ -154,6 +169,19 @@ $(function() {
                             break;
                     }
                 });
+            },
+            clearState: function() {
+                this.state = [];
+                this.deleted = 0;
+                currentId = 1;
+                boxesById = {};
+
+                $container2.empty();
+
+                this.addBox(-1, 1);
+
+                $container2.css('background-color', initialBgColor);
+
             }
         };
     })(jQuery);
