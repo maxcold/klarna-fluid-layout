@@ -6,7 +6,7 @@ var livereload = require('gulp-livereload');
 var minifyCss = require('gulp-minify-css');
 var autoprefixer = require('gulp-autoprefixer');
 
-gulp.task('minify', function() {
+gulp.task('minify-js', function() {
     gulp.src(['app/js/*.js', 'app/external/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
@@ -37,8 +37,10 @@ gulp.task('minify-css', function() {
         .pipe(livereload());
 });
 
+gulp.task('default', ['minify-js', 'minify-css']);
+
 gulp.task('watch', function() {
     livereload.listen();
-    gulp.watch('app/js/*.js', ['minify']);
+    gulp.watch('app/js/*.js', ['minify-js']);
     gulp.watch('app/css/*.css', ['minify-css']);
 });
