@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "JavaScript assignment for Klarna",
   "author": "Maxim Kholod",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maxcold/klarna-fluid-layout.git"
+  },
   "devDependencies": {
     "gulp": "=3.9.0",
     "gulp-autoprefixer": "=2.3.1",
