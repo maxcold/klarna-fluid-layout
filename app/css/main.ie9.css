@@ -11,3 +11,8 @@
 .box__delete {
     background-image: url(../images/box__delete.png);
 }
+
+.under{
+    display:inline-block;
+    width:100%;
+}
