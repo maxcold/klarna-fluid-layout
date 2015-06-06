@@ -31,10 +31,12 @@ $(function() {
                 this.setDeletedNumber();
             },
             setState: function(state) {
-                localStorage && localStorage.setItem(stateName, state);
+                if (localStorage) {
+                    localStorage.setItem(stateName, state);
+                }
             },
             getState: function() {
-                var state = localStorage && localStorage.getItem(stateName);
+                var state = localStorage ? localStorage.getItem(stateName) : undefined;
                 var stateArr;
 
                 if (state) {
@@ -46,13 +48,15 @@ $(function() {
                 return stateArr;
             },
             removeState: function() {
-                localStorage && localStorage.removeItem(stateName);
+                if (localStorage) {
+                    localStorage.removeItem(stateName);
+                }
             },
             setDeletedNumber: function() {
                 $deletedContainer.text(KLARNA.layout.deleted);
             },
             setBoxesCountNumber: function() {
-                $boxesCountContainer.text(KLARNA.layout.state.length)
+                $boxesCountContainer.text(KLARNA.layout.state.length);
             }
         };
     })(jQuery);

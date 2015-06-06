@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 (function() {
 
 var ptp = Array.prototype,
@@ -159,3 +160,4 @@ Array.isArray || (Array.isArray = function(obj) {
 });
 
 })();
+/* jshint ignore:end */
